@@ -59,14 +59,50 @@ a {
 
 /* ---- Layout Containers ---- */
 .main-header {
-	padding-top: .5em;
-	padding-bottom: .5em;
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
 }
-.banner{
-	text-align: center;
+.banner {
+  text-align: center;
   color: #fff;
-	background: #3acec2;
-	padding: 3.2em 0;
-	margin-bottom: 48px;
+  background: #3acec2;
+  padding: 3.2em 0;
+  margin-bottom: 48px;
 }
 
+.col {
+  padding-right: 1em;
+  padding-left: 1em;
+  background: #f0fff0;
+}
+
+/* ================================= 
+  Media Queries
+==================================== */
+
+@media (min-width: 769px) {
+  .main-header,
+  .main-nav {
+    display: flex;
+  }
+  .main-header {
+    flex-direction: column;
+    align-items: center;
+  }
+  .main-header,
+  .wrapper {
+    width: 90%;
+    margin: 0 auto;
+  }
+}
+@media (min-width: 1025px) {
+  .main-header {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+  .main-header,
+  .wrapper {
+    width: 80%;
+    max-width: 1200px;
+  }
+}
