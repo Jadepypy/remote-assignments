@@ -71,9 +71,10 @@ a {
 }
 
 .col {
-  padding-right: 1em;
-  padding-left: 1em;
+
+  padding: 1em;
   background: #f0fff0;
+  margin: 1em;
 }
 
 /* ================================= 
@@ -90,10 +91,18 @@ a {
     align-items: center;
   }
   .main-header,
-  .wrapper {
+  .wrapper{
     width: 90%;
     margin: 0 auto;
   }
+  .row{
+    display: flex;
+    flex-wrap: wrap;
+  }
+  .col{
+    flex: 1 40%;
+  }
+
 }
 @media (min-width: 1025px) {
   .main-header {
@@ -105,4 +114,5 @@ a {
     width: 80%;
     max-width: 1200px;
   }
+
 }
