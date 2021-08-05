@@ -20,5 +20,6 @@ button.addEventListener('click', () => {
     hidden_boxes.style.display = "none"
   }
   button.classList.toggle("clicked")
+  window.scrollTo(0,document.body.scrollHeight);
 })
 
