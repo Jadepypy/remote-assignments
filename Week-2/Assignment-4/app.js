@@ -16,10 +16,12 @@ banner.addEventListener('click', () => {
 button.addEventListener('click', () => {
   if (hidden_boxes.style.display === "none"){
     hidden_boxes.style.display = null
+    hidden_boxes.scrollIntoView()
   } else{
     hidden_boxes.style.display = "none"
   }
   button.classList.toggle("clicked")
-  window.scrollTo(0,document.body.scrollHeight);
 })
+
+
 
