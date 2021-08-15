@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sum</title>
+</head>
+<body>
+  <div>
+    <label for="number">Enter a Number:</label>
+    <input type="text" id="number" name='number'>
+    <button onclick="sendAJAX()">Submit</button>
+  </div>
+  <div id="result">
+  </div>
+
+  <script>
+    const xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function () {
+      if (xhr.readyState === 4 && xhr.status === 200) {
+        document.querySelector('#result').innerHTML = `<h3>${xhr.responseText}</h3>`;
+      }
+    }
+    function sendAJAX() {
+      xhr.open("get", 'http://localhost:3000/data' + "?number=" + document.querySelector('#number').value, true);
+      xhr.send();
+    }
+  </script>
+</body>
+</html>
