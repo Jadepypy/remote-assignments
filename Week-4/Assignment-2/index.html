@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    function ajax(src, callback) {
+      const xhr = new XMLHttpRequest();
+      xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+          callback(JSON.parse(xhr.responseText));
+        }
+      }
+      xhr.open("get", src);
+      xhr.send();
+    }
+    function render(data) {
+      const ul = document.createElement('ul');
+      Object.values(data).forEach(product => {
+        let li = document.createElement('li');
+        li.innerText = `${product.name}，價格${product.price}，${product.description}`
+        ul.appendChild(li);
+      })
+      document.body.appendChild(ul);
+    }
+    ajax("http://localhost:3000/", function (response) {
+      render(response);
+    }); 
+  </script>
+</body>
+</html>
