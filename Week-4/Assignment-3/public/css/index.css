@@ -15,7 +15,9 @@ body {
   padding: 1em 1em;
   margin: 0.5em 2em;
 }
-
+h3 {
+  color: #fa5959;
+}
 h1{
   color: white;
   font-size: 30px;

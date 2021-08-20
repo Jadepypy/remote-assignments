@@ -6,35 +6,37 @@ head
   title Home
   link(rel='stylesheet', href='/css/index.css')
 body
+  #message
+    h3
   #form-container
     #signup
       h1 Sign Up
       form(action='/' method='post')
-        input(type='hidden' name='signup' value='signup-form')
+        input(type='hidden' name='form' value='signup-form')
         .field-wrap
           label
             | Email
           br
-          input(type='email' required='' autocomplete='off')
+          input(type='email' name='email' required='' autocomplete='off')
         .field-wrap
           label
             | Password
           br
-          input(type='password' required='' autocomplete='off')
+          input(type='password' name='password' required='' autocomplete='off')
         button.button.button-block(type='submit') Submit
     #login
       h1 Log in
       form(action='/' method='post')
-        input(type='hidden' name='login' value='login-form')
+        input(type='hidden' name='form' value='login-form')
         .field-wrap
           label
             | Email
           br
-          input(type='email' required='' autocomplete='off')
+          input(type='email' name='email' required='' autocomplete='off')
         .field-wrap
           label
             | Password
           br
-          input(type='password' required='' autocomplete='off')
+          input(type='password' name='password' required='' autocomplete='off')
         button.button.button-block Log In
 
