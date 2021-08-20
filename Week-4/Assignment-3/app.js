@@ -18,6 +18,10 @@ app.set('view engine', 'pug');
 app.get('/', (req, res) => {
   res.render('index');
 })
+app.get('/member', (req, res) => {
+  res.render('member');
+})
+
 app.post('/', (req, res) => {
   let user;
   let message = ''
@@ -64,8 +68,10 @@ app.post('/', (req, res) => {
         message = 'Wrong passowrd.'
       }
     }).then(() => {
-      if (message === 'Log in successfully!' || message === 'Sign up successfully!'){
-        res.render('member', {message});
+      if (message === 'Log in successfully!' || message === 'Sign up successfully!'){        
+        res.redirect('/member');
+      } else{
+        res.render('index', {message});
       }
       
     })

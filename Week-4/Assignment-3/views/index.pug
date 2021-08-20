@@ -6,8 +6,9 @@ head
   title Home
   link(rel='stylesheet', href='/css/index.css')
 body
-  #message
-    h3
+  if message
+    #message
+      h3 #{message}
   #form-container
     #signup
       h1 Sign Up
