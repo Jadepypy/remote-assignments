@@ -1,6 +1,7 @@
 const express = require('express');
 const mysqlx = require('@mysql/xdevapi');
 const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
 
 const config = {
     password: 'mysql123',
@@ -13,13 +14,15 @@ const config = {
 const app = express();
 app.use(express.static('public'))
 app.use(bodyParser.urlencoded({extended: false}));
+app.use(cookieParser())
 app.set('view engine', 'pug');
 
 app.get('/', (req, res) => {
+  res.clearCookie('username');
   res.render('index');
 })
 app.get('/member', (req, res) => {
-  res.render('member');
+  res.render('member', {username: req.cookies.username});
 })
 
 app.post('/', (req, res) => {
@@ -43,11 +46,15 @@ app.post('/', (req, res) => {
         user.insert(['email', 'password'])
               .values(req.body.email, req.body.password)
               .execute();
+        res.cookie('username', req.body.email);
         message = 'Sign up successfully!'
       }
     }).then(() => {
-      console.log(message)
-      res.render('member', {message});
+      if (message === 'Sign up successfully!'){        
+        res.redirect('/member');
+      } else{
+        res.render('index', {message});
+      }
     })
   }else{
     mysqlx.getSession(config)
@@ -63,12 +70,13 @@ app.post('/', (req, res) => {
       if (userData.length === 0){
         message = 'Email not registered.'
       }else if(req.body.password === userData[0][2]){
+        res.cookie('username', req.body.email);
         message = 'Log in successfully!'
       }else {
         message = 'Wrong passowrd.'
       }
     }).then(() => {
-      if (message === 'Log in successfully!' || message === 'Sign up successfully!'){        
+      if (message === 'Log in successfully!'){        
         res.redirect('/member');
       } else{
         res.render('index', {message});
