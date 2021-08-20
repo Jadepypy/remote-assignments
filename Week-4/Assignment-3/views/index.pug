@@ -1,0 +1,40 @@
+doctype html
+head
+  meta(charset='UTF-8')
+  meta(http-equiv='X-UA-Compatible' content='IE=edge')
+  meta(name='viewport' content='width=device-width, initial-scale=1.0')
+  title Home
+  link(rel='stylesheet', href='/css/index.css')
+body
+  #form-container
+    #signup
+      h1 Sign Up
+      form(action='/' method='post')
+        input(type='hidden' name='signup' value='signup-form')
+        .field-wrap
+          label
+            | Email
+          br
+          input(type='email' required='' autocomplete='off')
+        .field-wrap
+          label
+            | Password
+          br
+          input(type='password' required='' autocomplete='off')
+        button.button.button-block(type='submit') Submit
+    #login
+      h1 Log in
+      form(action='/' method='post')
+        input(type='hidden' name='login' value='login-form')
+        .field-wrap
+          label
+            | Email
+          br
+          input(type='email' required='' autocomplete='off')
+        .field-wrap
+          label
+            | Password
+          br
+          input(type='password' required='' autocomplete='off')
+        button.button.button-block Log In
+
