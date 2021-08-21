@@ -1,6 +1,4 @@
 const mysqlx = require('@mysql/xdevapi');
-let user;
-
 const config = {
     password: 'mysql123',
     user: 'root',
@@ -8,52 +6,47 @@ const config = {
     port: 33060,
     schema: 'assignment'
 };
+let user;
+mysqlx.getSession(config)
+.then(async (session) => {
+    user = await session.getSchema('assignment').getTable('user');
+})
 
-function checkValidity(formName, email, password){
-  if (formName=== 'signup-form'){
-    mysqlx.getSession(config)
-    .then(async (session) => {
-        user = await session.getSchema('assignment').getTable('user');
-        return await findData(email)
-    })
-    .then(result => {
-      result = result.fetchall()
-      if(result.length > 0){
-        message = 'Email already registered.'
-      }else {
-        user.insert(['email', 'password'])
-              .values(email, password)
-              .execute();
-        message = 'Sign up successfully!'
-      }
-      return message
-    })
-  }else{
-    mysqlx.getSession(config)
-    .then(async (session) => {
-        user = await session.getSchema('assignment').getTable('user');
-        return await findData(email)
-    })
-    .then(result => {
-      const userData = result.fetchAll();
-      console.log('?')
-      console.log(userData)
-      if (userData.length === 0){
-        message = 'Email not registered.'
-      }else if(password === userData[0][2]){
-        message = 'Log in successfully!'
-      }else {
-        message = 'Wrong passowrd.'
-      }
-      return message
-    })
+
+async function checkValidity(formName, email, password){
+  if (formName === 'signup-form'){
+    let message = await findEmailUser(email)
+                  .then(async (userData) => {
+                    if(userData.length > 0){
+                      return 'Email already registered.'
+                    }else {
+                      await user.insert(['email', 'password'])
+                                .values(email, password)
+                                .execute();
+                      return 'Sign up successfully!'
+                    }
+                  })
+    return message;
+  } else{
+    let message = await findEmailUser(email)
+                  .then(async (userData) => {
+                    if (userData.length === 0){
+                      return 'Email not registered.'
+                    }else if(password === userData[0][2]){
+                      return 'Log in successfully!'
+                    }else {
+                      return 'Wrong passowrd.'
+                    }
+                  })
+    return message;
   }
 }
-function findData (email){
-  return  user.select()
-              .where('email = :email')
-              .bind('email', email)
-              .execute()
+async function findEmailUser (email){
+  const data =  await user.select()
+                      .where('email = :email')
+                      .bind('email', email)
+                      .execute()
+  return data.fetchAll()
 }
 
 module.exports = checkValidity

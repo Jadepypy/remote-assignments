@@ -1,5 +1,4 @@
 const express = require('express');
-const mysqlx = require('@mysql/xdevapi');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const checkValidity = require('./checkValidity');
@@ -26,11 +25,11 @@ app.get('/member', (req, res) => {
   res.render('member', {username: req.cookies.username});
 })
 
-app.post('/', (req, res) => {
-  const message = checkValidity(req.body.form, req.body.email, req.body.password);
+app.post('/', async (req, res) => {
+  let message = await checkValidity(req.body.form, req.body.email, req.body.password);
 
   if (message === 'Sign up successfully!' || message === 'Log in successfully!'){   
-    res.cookie('username', email);     
+    res.cookie('username', req.body.email);     
     res.redirect('/member');
   } else{
     res.render('index', {message});

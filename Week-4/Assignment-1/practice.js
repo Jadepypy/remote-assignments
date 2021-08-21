@@ -1,6 +1,6 @@
 function delayedResult(n1, n2, delayTime, callback) {
   
-  //by default setTimeout does not pass any arguement. hence, setTimeout((n1, n2) => callback(n1 + n2), delayTime); would show undefined
+  //by default setTimeout does not pass any arguement to callback. hence, setTimeout((n1, n2) => callback(n1 + n2), delayTime); would show undefined
   //setTimeout(() => callback(n1 + n2), delayTime);
   setTimeout(callback, delayTime, n1 + n2);
 }
